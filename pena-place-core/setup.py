@@ -64,7 +64,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'pena-place-core = src.main:main',
+            'pena-place-core=src.main:main',
         ],
     },
     cmdclass={'test': RunTests},

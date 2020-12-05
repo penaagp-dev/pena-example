@@ -13,4 +13,4 @@ EXPOSE 3000
 
 EXPOSE 3000
 
-CMD ["pena-place-core", "http", "serve"]
+CMD ["place_core", "http", "serve"]

@@ -6,6 +6,6 @@ import datetime
 class HealthController(Resource):   
     def get(self):
         # health controller
-        return result.response(200, message="OK")
+        return result.response(200, message="ok")
 
 

@@ -32,9 +32,9 @@ class RunTests(Command):
 
 
 setup(
-    name='pena-place-core',
+    name='place_core',
     version=__version__,
-    description='microservice specialist framework',
+    description='Get Your place seacrh from goolge maps',
     long_description=long_description,
     url='',
     author='Sofyan Saputra',
@@ -64,7 +64,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'pena-place-core=src.main:main',
+            'place_core = src.main:main',
         ],
     },
     cmdclass={'test': RunTests},

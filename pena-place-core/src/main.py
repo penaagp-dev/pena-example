@@ -1,6 +1,6 @@
 """
 Usage:
-  pena <command> [<args>...]
+  place_core <command> [<args>...]
 
 Options:
   -h, --help                             Display this help and exit
@@ -10,7 +10,7 @@ Commands:
   http                                 Starting http serve
   migrate                              Migrating apps
 
-Run 'pena COMMAND --help' for more information on a command.
+Run 'place_core COMMAND --help' for more information on a command.
 """
 from src import __version__ as VERSION
 from inspect import getmembers, isclass

@@ -6,7 +6,7 @@ from src.pkg.selenium import set_url
 import time
 
 
-def setup_maps(url, search):
+def setup_maps(url):
     driver = set_url(url)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "searchboxinput")))
     time.sleep(5)
@@ -27,7 +27,6 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[]):
             div_number = 1
             name_of_bengkel = None
             phone_number = None
-            address = None
             rating = None
             number_of_reviews = None
             category = None

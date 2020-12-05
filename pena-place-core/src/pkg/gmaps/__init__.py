@@ -3,7 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from src.pkg.selenium import set_url
-import time
+import time, csv
 
 
 def setup_maps(url):
@@ -15,13 +15,21 @@ def setup_maps(url):
 def maximize_window(driver=set_url):
     driver.maximize_window()
 
-def search_place(driver=set_url, keyword_list=[], no_use_category_list=[]):
+def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], result_path="", suffix=""):
+    result_filename = "_".join([result_path+"/", suffix])+ '.csv'
+    delimiter = ","
+
     for i in range(len(keyword_list)):
         input = driver.find_element_by_class_name("tactile-searchbox-input")
         driver.find_element_by_class_name("tactile-searchbox-input").clear()
         input.send_keys(keyword_list[i])
         input.send_keys(Keys.ENTER)
         time.sleep(8)
+        # create csv
+        with open(result_filename, mode='w') as output:
+            output_writer = csv.writer(output, delimiter=delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            output_writer.writerow(["Name", "Address", "Phone Number", "Latitude", "Longitude", "Category", "Rating", "Reviewer", "Location"])
+
         for x in range(10):
             result_list = driver.find_elements_by_class_name("section-result")  
             div_number = 1
@@ -34,59 +42,47 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[]):
             for j in range(len(result_list)):                    
                 try:
                     category = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[2]/span[4]".format(div_number))
-                except Exception as e:
+                except Exception:
                     category = None
-                    print("Category:> ",category) 
                 else:
                     category = category.text
                     if category.lower() in no_use_category_list:
                         continue
-                    print("Category:> ",category)
                     try:
                         name_of_bengkel = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/h3/span".format(div_number))
-                    except Exception as e:
+                    except Exception:
                         name_of_bengkel = None
-                        print("Name:> None") 
                     else:
-                        name_of_bengkel = name_of_bengkel.text 
-                        print("Name:> ",name_of_bengkel)
+                        name_of_bengkel = name_of_bengkel.text
                     
                     try:
                         phone_number = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[5]/span[3]/span[1]".format(div_number))
-                    except Exception as e:
+                    except Exception:
                         phone_number = None
-                        print("Phone:> ",phone_number)
                     else:
                         phone_number = phone_number.text
-                        print("Phone:> ",phone_number)
 
                     try:
                         rating = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/span[3]/span[1]/span[1]/span".format(div_number))
-                    except Exception as e:
+                    except Exception :
                         rating = None
-                        print("Rating:> ", rating)
                     else:
                         rating = rating.text
-                        print("Rating:> ", rating)
 
                     try:
                         number_of_reviews = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/span[3]/span[1]/span[2]".format(div_number))
-                    except Exception as e:
+                    except Exception:
                         number_of_reviews = None
-                        print("Review:> ",number_of_reviews) 
                     else:
                         number_of_reviews = number_of_reviews.text
                         number_of_reviews = number_of_reviews.rstrip(')')
                         number_of_reviews = number_of_reviews.lstrip('(')
-                        print("Review:> ",number_of_reviews) 
             
                     try:
                         bengkel = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]".format(div_number))
                         time.sleep(3)
-                    except Exception as e:
+                    except Exception:
                         places = None
-                        print("Places:> ", places)
-                        print("Click Detail Error:> ", e)
                     else:
                         bengkel.click()
                         time.sleep(7)
@@ -99,32 +95,25 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[]):
 
                         try:
                             latitude = str(url_in_browser[pos1 + 3: pos2])
-                        except Exception as e:
+                        except Exception:
                             latitude = None
-                            print("Latitude:>", latitude)
-                        else:
-                            print("Latitude:>", latitude)
 
                         try:
                             longitude = str(url_in_browser[pos2 + 3:])
-                        except Exception as e:
+                        except Exception:
                             longitude = None
-                            print("Longitude:>", longitude)
-                        else:
-                            print("Longitude:>", longitude)
 
                         try:
                             sharePlaceBtn = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[5]/div[5]/div") 
-                        except Exception as e:
+                        except Exception:
                             places = None
-                            print("Places:> ", places)
                         else:
                             sharePlaceBtn.click()
                             time.sleep(10)
                             try:
                                 linkPlace = driver.find_element_by_xpath("//*[@id='modal-dialog-widget']/div[2]/div/div[3]/div/div/div[1]/div[4]/div[2]/div[1]/input")
                                 fullAddress = driver.find_element_by_xpath("//*[@id='modal-dialog-widget']/div[2]/div/div[3]/div/div/div[1]/div[3]/div[2]/div[2]")
-                            except Exception as e:
+                            except Exception:
                                 places = None
                                 fullAddress = None
                                 modalExit = driver.find_element_by_xpath("//*[@id='modal-dialog-widget']/div[2]/div/div[2]/button")
@@ -134,21 +123,20 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[]):
                                 back.click()
                             else:
                                 places = linkPlace.get_attribute('value')
-                                print("Places:> ", places)
                                 fullAddress = fullAddress.text
-                                print("FullAddress: > ", fullAddress)
                                 modalExit = driver.find_element_by_xpath("//*[@id='modal-dialog-widget']/div[2]/div/div[2]/button")
                                 modalExit.click()
                                 time.sleep(3)
                                 back = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/button")
                                 back.click()
                     
+                    with open(result_filename, mode='a') as output:
+                        output_writer = csv.writer(output, delimiter=delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                        output_writer.writerow([name_of_bengkel, fullAddress, phone_number, latitude, longitude, category, rating, number_of_reviews, places])
                 time.sleep(5)
-                print("________________________________________________")
                 div_number += 2
-        driver.find_element_by_xpath("//*[@id='n7lv7yjyC35__section-pagination-button-next']/img").click()
-        time.sleep(8)
-        div_number += 2
+            driver.find_element_by_xpath("//*[@id='n7lv7yjyC35__section-pagination-button-next']/img").click()
+            time.sleep(5)
     driver.close()
     driver.quit()
 

@@ -15,6 +15,7 @@ failure_status = {
     406: 'Method Not Acceptable',
     409: 'Conflict',
     423: 'Locked',
+    499: 'Client Closed Request',
     426: 'Upgrade Required',
     500: 'Internal Server Error - unexpected server-side error',
     501: 'Not Implemented - functionality is not implemented on the server side',

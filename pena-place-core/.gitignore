@@ -127,3 +127,4 @@ production/*
 .DS_Store
 log/*
 testing.py
+mydb

@@ -2,7 +2,7 @@ from src.consts import appctx
 import arrow
 
 
-def response(status_code, message=None, data=None):
+def response(status_code, message=None, data=None, meta=None):
     status = {}
     status['code'] = status_code
     if status_code in appctx.success_status:
@@ -14,5 +14,9 @@ def response(status_code, message=None, data=None):
     else:
         status['status'] = appctx.failure_status[status_code]
         status['message'] = message if message else appctx.failure_status[400]
-    status['data'] = data if data else None
+
+    if data is not None:
+        status['data'] = data
+    if meta is not None:
+        status['meta'] = meta
     return status

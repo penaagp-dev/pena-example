@@ -1,3 +1,14 @@
-version: '0.8.0'
+version: '3'
 services:
-    
+  mariadb:
+    image: mariadb/server:10.3
+    environment:
+      MARIADB_ROOT_PASSWORD: pena_place
+      MARIADB_USER: pena_place
+      MARIADB_PASSWORD: pena_place
+      MARIADB_DATABASE: pena_place
+      TZ: "Asia/Jakarta"
+    volumes:
+      - ./mydb:/var/lib/mysql
+    ports:
+      - 3306:3306

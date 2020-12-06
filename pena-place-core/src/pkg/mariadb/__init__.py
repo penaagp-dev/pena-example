@@ -9,7 +9,8 @@ def get_connection():
         password=os.environ.get("DB_PASSWORD", ""),
         db=os.environ.get("DB_NAME"),
         charset='utf8',
-        cursorclass=pymysql.cursors.DictCursor
+        cursorclass=pymysql.cursors.DictCursor,
+        autocommit=True
     )
     return conn
 

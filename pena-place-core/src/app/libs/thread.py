@@ -12,11 +12,15 @@ class GmapsThreading(object):
         thread.start()
 
     def run(self):
+        maps_driver = gmaps.setup_maps("https://www.google.com/maps")
         try:
-            maps_driver = gmaps.setup_maps("https://www.google.com/maps")
             gmaps.maximize_window(maps_driver)
             gmaps.search_place(maps_driver, self.payload["keyword"], self.payload["no_use_category"], self.path_result, self.suffix)
         except Exception as e:
-            print("Error:> ", e)
+            maps_driver.close()
+            maps_driver.quit()
             raise e
+        else:
+            maps_driver.close()
+            maps_driver.quit()
             

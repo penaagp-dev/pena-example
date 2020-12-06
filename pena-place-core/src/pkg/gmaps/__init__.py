@@ -46,100 +46,99 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], resul
                     category = None
                 else:
                     category = category.text
-                    if category.lower() in no_use_category_list:
-                        continue
-                    try:
-                        name_of_bengkel = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/h3/span".format(div_number))
-                    except Exception:
-                        name_of_bengkel = None
-                    else:
-                        name_of_bengkel = name_of_bengkel.text
-                    
-                    try:
-                        phone_number = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[5]/span[3]/span[1]".format(div_number))
-                    except Exception:
-                        phone_number = None
-                    else:
-                        phone_number = phone_number.text
-
-                    try:
-                        rating = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/span[3]/span[1]/span[1]/span".format(div_number))
-                    except Exception :
-                        rating = None
-                    else:
-                        rating = rating.text
-
-                    try:
-                        number_of_reviews = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/span[3]/span[1]/span[2]".format(div_number))
-                    except Exception:
-                        number_of_reviews = None
-                    else:
-                        number_of_reviews = number_of_reviews.text
-                        number_of_reviews = number_of_reviews.rstrip(')')
-                        number_of_reviews = number_of_reviews.lstrip('(')
-            
-                    try:
-                        bengkel = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]".format(div_number))
-                        time.sleep(3)
-                    except Exception:
-                        places = None
-                    else:
-                        bengkel.click()
-                        time.sleep(7)
-                        #Getting longitude and latitude
-                        url_in_browser = str(driver.current_url)
-                        pos1 = url_in_browser.find("!3d")
-                        pos2 = url_in_browser.find("!4d")
-                        longitude = ""
-                        latitude = ""
-
+                    no_use_category_list = [each_string.lower() for each_string in no_use_category_list]
+                    if category.lower() not in no_use_category_list:
                         try:
-                            latitude = str(url_in_browser[pos1 + 3: pos2])
+                            name_of_bengkel = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/h3/span".format(div_number))
                         except Exception:
-                            latitude = None
-
+                            name_of_bengkel = None
+                        else:
+                            name_of_bengkel = name_of_bengkel.text
+                        
                         try:
-                            longitude = str(url_in_browser[pos2 + 3:])
+                            phone_number = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[5]/span[3]/span[1]".format(div_number))
                         except Exception:
-                            longitude = None
+                            phone_number = None
+                        else:
+                            phone_number = phone_number.text
 
                         try:
-                            sharePlaceBtn = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[5]/div[5]/div") 
+                            rating = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/span[3]/span[1]/span[1]/span".format(div_number))
+                        except Exception :
+                            rating = None
+                        else:
+                            rating = rating.text
+
+                        try:
+                            number_of_reviews = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/span[3]/span[1]/span[2]".format(div_number))
+                        except Exception:
+                            number_of_reviews = None
+                        else:
+                            number_of_reviews = number_of_reviews.text
+                            number_of_reviews = number_of_reviews.rstrip(')')
+                            number_of_reviews = number_of_reviews.lstrip('(')
+                
+                        try:
+                            bengkel = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]".format(div_number))
+                            time.sleep(3)
                         except Exception:
                             places = None
                         else:
-                            sharePlaceBtn.click()
-                            time.sleep(10)
+                            bengkel.click()
+                            time.sleep(7)
+                            #Getting longitude and latitude
+                            url_in_browser = str(driver.current_url)
+                            pos1 = url_in_browser.find("!3d")
+                            pos2 = url_in_browser.find("!4d")
+                            longitude = ""
+                            latitude = ""
+
                             try:
-                                linkPlace = driver.find_element_by_xpath("//*[@id='modal-dialog-widget']/div[2]/div/div[3]/div/div/div[1]/div[4]/div[2]/div[1]/input")
-                                fullAddress = driver.find_element_by_xpath("//*[@id='modal-dialog-widget']/div[2]/div/div[3]/div/div/div[1]/div[3]/div[2]/div[2]")
+                                latitude = str(url_in_browser[pos1 + 3: pos2])
+                            except Exception:
+                                latitude = None
+
+                            try:
+                                longitude = str(url_in_browser[pos2 + 3:])
+                            except Exception:
+                                longitude = None
+
+                            try:
+                                sharePlaceBtn = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[5]/div[5]/div") 
                             except Exception:
                                 places = None
-                                fullAddress = None
-                                modalExit = driver.find_element_by_xpath("//*[@id='modal-dialog-widget']/div[2]/div/div[2]/button")
-                                modalExit.click()
-                                time.sleep(3)
-                                back = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/button")
-                                back.click()
                             else:
-                                places = linkPlace.get_attribute('value')
-                                fullAddress = fullAddress.text
-                                modalExit = driver.find_element_by_xpath("//*[@id='modal-dialog-widget']/div[2]/div/div[2]/button")
-                                modalExit.click()
-                                time.sleep(3)
-                                back = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/button")
-                                back.click()
+                                sharePlaceBtn.click()
+                                time.sleep(10)
+                                try:
+                                    linkPlace = driver.find_element_by_xpath("//*[@id='modal-dialog-widget']/div[2]/div/div[3]/div/div/div[1]/div[4]/div[2]/div[1]/input")
+                                    fullAddress = driver.find_element_by_xpath("//*[@id='modal-dialog-widget']/div[2]/div/div[3]/div/div/div[1]/div[3]/div[2]/div[2]")
+                                except Exception:
+                                    places = None
+                                    fullAddress = None
+                                    modalExit = driver.find_element_by_xpath("//*[@id='modal-dialog-widget']/div[2]/div/div[2]/button")
+                                    modalExit.click()
+                                    time.sleep(3)
+                                    back = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/button")
+                                    back.click()
+                                else:
+                                    places = linkPlace.get_attribute('value')
+                                    fullAddress = fullAddress.text
+                                    modalExit = driver.find_element_by_xpath("//*[@id='modal-dialog-widget']/div[2]/div/div[2]/button")
+                                    modalExit.click()
+                                    time.sleep(3)
+                                    back = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/button")
+                                    back.click()
+                        
+                        result_list = [name_of_bengkel, fullAddress, phone_number, latitude, longitude, category, rating, number_of_reviews, places]
+                        print("logging:> ", result_list)
+                        with open(result_filename, mode='a') as output:
+                            output_writer = csv.writer(output, delimiter=delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                            output_writer.writerow(result_list)
                     
-                    result_list = [name_of_bengkel, fullAddress, phone_number, latitude, longitude, category, rating, number_of_reviews, places]
-                    print("logging:> ", result_list)
-                    with open(result_filename, mode='a') as output:
-                        output_writer = csv.writer(output, delimiter=delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                        output_writer.writerow(result_list)
                 time.sleep(5)
                 div_number += 2
             driver.find_element_by_xpath("//*[@id='n7lv7yjyC35__section-pagination-button-next']/img").click()
             time.sleep(5)
-    driver.close()
-    driver.quit()
 
 

@@ -28,7 +28,7 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], resul
         # create csv
         with open(result_filename, mode='w') as output:
             output_writer = csv.writer(output, delimiter=delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            output_writer.writerow(["Name", "Address", "Phone Number", "Latitude", "Longitude", "Category", "Rating", "Reviewer", "Location"])
+            output_writer.writerow(["name", "address", "phone_Number", "latitude", "longitude", "category", "rating", "reviewer", "location"])
 
         for x in range(10):
             result_list = driver.find_elements_by_class_name("section-result")  
@@ -130,9 +130,11 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], resul
                                 back = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/button")
                                 back.click()
                     
+                    result_list = [name_of_bengkel, fullAddress, phone_number, latitude, longitude, category, rating, number_of_reviews, places]
+                    print("logging:> ", result_list)
                     with open(result_filename, mode='a') as output:
                         output_writer = csv.writer(output, delimiter=delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                        output_writer.writerow([name_of_bengkel, fullAddress, phone_number, latitude, longitude, category, rating, number_of_reviews, places])
+                        output_writer.writerow(result_list)
                 time.sleep(5)
                 div_number += 2
             driver.find_element_by_xpath("//*[@id='n7lv7yjyC35__section-pagination-button-next']/img").click()

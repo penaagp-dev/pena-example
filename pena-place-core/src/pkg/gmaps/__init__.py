@@ -41,6 +41,7 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], resul
             places = None
             for j in range(len(result_list)):                    
                 try:
+                    # category = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[2]/span[4]".format(div_number))
                     category = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[2]/span[4]".format(div_number))
                 except Exception:
                     category = None
@@ -49,6 +50,7 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], resul
                     no_use_category_list = [each_string.lower() for each_string in no_use_category_list]
                     if category.lower() not in no_use_category_list:
                         try:
+                            # name_of_bengkel = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/h3/span".format(div_number))
                             name_of_bengkel = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/h3/span".format(div_number))
                         except Exception:
                             name_of_bengkel = None
@@ -56,6 +58,7 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], resul
                             name_of_bengkel = name_of_bengkel.text
                         
                         try:
+                            # phone_number = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[5]/span[3]/span[1]".format(div_number))
                             phone_number = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[5]/span[3]/span[1]".format(div_number))
                         except Exception:
                             phone_number = None
@@ -63,6 +66,7 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], resul
                             phone_number = phone_number.text
 
                         try:
+                            # rating = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/span[3]/span[1]/span[1]/span".format(div_number))
                             rating = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/span[3]/span[1]/span[1]/span".format(div_number))
                         except Exception :
                             rating = None
@@ -70,6 +74,7 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], resul
                             rating = rating.text
 
                         try:
+                            # number_of_reviews = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/span[3]/span[1]/span[2]".format(div_number))
                             number_of_reviews = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[1]/div[1]/div[2]/span[3]/span[1]/span[2]".format(div_number))
                         except Exception:
                             number_of_reviews = None
@@ -79,6 +84,7 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], resul
                             number_of_reviews = number_of_reviews.lstrip('(')
                 
                         try:
+                            # bengkel = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]".format(div_number))
                             bengkel = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]".format(div_number))
                             time.sleep(3)
                         except Exception:
@@ -138,7 +144,7 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], resul
                     
                 time.sleep(5)
                 div_number += 2
-            driver.find_element_by_xpath("//*[@id='n7lv7yjyC35__section-pagination-button-next']/img").click()
+            driver.find_element_by_xpath("//*[@id='ppdPk-Ej1Yeb-LgbsSe-tJiF1e']/img").click()
             time.sleep(5)
 
 

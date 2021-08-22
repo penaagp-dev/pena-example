@@ -31,7 +31,7 @@ Please open this [Collection](https://www.getpostman.com/collections/0dba1135cb4
 - Install chrome
 
 #### Install Selenium Webdriver with chrome
-check this (selenium)[https://selenium-python.readthedocs.io/installation.html]
+check this [selenium](https://selenium-python.readthedocs.io/installation.html)
 Download and take driver to this root application folder
 
 

@@ -39,14 +39,19 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], resul
             number_of_reviews = None
             category = None
             places = None
-            for j in range(len(result_list)):                    
+            print("===============>")  
+            for j in range(len(result_list)): 
+                print("DATA:>")
+                print(j)       
                 try:
                     # category = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[2]/span[4]".format(div_number))
                     category = driver.find_element_by_xpath("//*[@id='pane']/div/div[1]/div/div/div[4]/div[1]/div[{}]/div[2]/div[1]/div[2]/span[4]".format(div_number))
+                    print(category)
                 except Exception:
                     category = None
                 else:
                     category = category.text
+                    print(category)
                     no_use_category_list = [each_string.lower() for each_string in no_use_category_list]
                     if category.lower() not in no_use_category_list:
                         try:
@@ -144,7 +149,7 @@ def search_place(driver=set_url, keyword_list=[], no_use_category_list=[], resul
                     
                 time.sleep(5)
                 div_number += 2
-            driver.find_element_by_xpath("//*[@id='ppdPk-Ej1Yeb-LgbsSe-tJiF1e']/img").click()
+            driver.find_element_by_xpath("//*[@id='ppdPk-Ej1Yeb-LgbsSe-tJiF1e']").click()
             time.sleep(5)
 
 

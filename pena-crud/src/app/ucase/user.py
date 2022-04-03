@@ -1,10 +1,8 @@
-from unicodedata import name
-from flask_restful import Resource, reqparse, fields
+from flask_restful import Resource
 from src.app.appctx import result, data
 from src.app.repository import user
-import datetime
 
-class User(Resource):
+class Insert(Resource):
     def post(self):
         payload = data.cast_json()
         userData = {
@@ -18,8 +16,22 @@ class User(Resource):
             return result.response(404, message="Error:> "+str(e))
         else:
             return result.response(200, data=userData)
+
+class List(Resource):
     def get(self):
         limit  = int(data.cast_params('limit'))
         page  = int(data.cast_params('page'))
         list = user.find(limit=limit, page=page)
-        return result.response(200, data=list)
+        return result.response(200, data=list)   
+
+class Update(Resource):
+    def put(self, id):
+        pass
+
+class Detail(Resource):
+    def get(self, id):
+        pass
+
+class Delete(Resource):
+    def delete(self, id):
+        pass

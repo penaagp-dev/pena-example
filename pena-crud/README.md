@@ -1,5 +1,5 @@
-# PENA FRAMEWORK
-Microservice specialist framework
+# PENA-REST-ENGIN CRUD EXAMPLE
+Example from pena-rest-engin
 
 ## Getting Started
 ### Environtment Setup
@@ -8,16 +8,25 @@ mv env.example .env
 ```
 
 ### Installing
-#### Contribution Mode
+#### Development Mode
 ```
 pip install -e .
 ```
 
-#### Programmer Mode
+#### Production Mode
 ```
 pip install .
 ```
 
+### Run Migration
+```
+pena migrate up
+```
+or down migration
+
+```
+pena migrate down
+```
 ### Running
 ```
 pena http serve

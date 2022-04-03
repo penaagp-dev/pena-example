@@ -20,3 +20,19 @@ def find(limit=1, page=0):
         raise e
     else:
         return curr.fetchall()
+
+def fecth(id):
+    try:
+        curr.execute("select * from "+TABLE_USER+" where id=%s", (id))
+    except Exception as e:
+        raise e
+    else:
+        return curr.fetchone()
+
+def delete(id):
+    try:
+        curr.execute("DELETE from "+TABLE_USER+" where id=%s", (id))
+    except Exception as e:
+        raise e
+    else:
+        return True

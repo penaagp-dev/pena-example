@@ -7,8 +7,8 @@ v1_blueprint = Blueprint("api", __name__, url_prefix='/v1')
 api = Api(v1_blueprint)
 api.add_resource(HealthController, '/health')
 
-api.add_resource(user.Insert, '/user') #put and post
-api.add_resource(user.List, "/user") # get list
+api.add_resource(user.Insert, '/user')
+api.add_resource(user.List, "/user") 
 api.add_resource(user.Delete, "/user/<id>")
 api.add_resource(user.Detail, "/user/<id>")
 
